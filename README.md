@@ -1,3 +1,3 @@
-# gmds-17
+# README
 
-Code and Slides of my presentation at the GMDS 17 "Auf dem Weg zu einem entscheidungsunterstützenden System zur Behandlung von Patienten mit Diabetischem Fußsyndrom"
+Slides and Script of my presentation "Auf dem Weg zu einem entscheidungsunterstützenden System bei der Behandlung von Patienten mit Diabetischem Fußsyndrom" am 20.09.17 auf der GMDS 2017 in Oldenburg
