@@ -1,0 +1,84 @@
+---
+title: Auf dem Weg zu einem entscheidungsunterstützenden System zur Behandlung von
+  Patienten mit Diabetischem Fußsyndrom
+author: "Jens Hüsers et al."
+date: "GMDS 17 in Oldenburg"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+csl: biomed-central.csl
+bibliography: /home/jnshsrs/Documents/R-Projects/pedis-algorithms/bibliography.bib
+---
+
+```{r setup, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(knitr)
+library(RSQLite)
+
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+# Der Schwerpunkt dieser Arbeit ist der Nutzen von Gewichteten Scoring Systemen
+
+# Stichwörter
+# ---
+# Risikoscore
+# Punktscore
+# Vorhersagemodell
+# Prädiktor
+# Ereignis
+# Vorhersage
+# Outcome
+
+# Mesh Terms
+#   Risk Assessment
+#   Diabetic Foot
+#   Health Information Exchange
+#   Decision Support Systems, Clinical
+
+
+
+
+```
+
+# Problemstellung
+Das Diabetische Fußsyndrom (DFS) ist eine Komplikation des Diabetes Mellitus welches zur Amputation der betroffenen Extremität führen kann [@zhang_global_2017].
+Die frühzeitige Initiierung der richtigen Behandlung, die auch eine Amputation sein kann, ist für den Therapieerfolg entscheidend.
+Dazu zählt das Erkennen von Risikopatienten, für die belastende, sukzessive Amputationen vermieden werden können.
+Daher werden zunehmend klinische Vorhersagemodelle zur Entscheidungsunterstützung eingesetzt [@schaper_prevention_2016].
+Mit Punktesystemen werden Patientenmerkmale erfasst und Summenscores gebildet [@karthikesalingam_systematic_2010], deren Attraktivität in der einfachen, manuellen Berechnungsweise liegt, z.B. PEDIS-Skala @wiemeyer_pedis-klassifikation_2012 @pickwell_predictors_2015 und SINBAD-Skala [@chuan_reliability_2015]. 
+Diesen Risikoskalen stehen komplexere Vorhersagemodelle gegenüber, welche überlicherweise durch entscheidungsunterstützende Informationssysteme berechnet werden.
+Die Forschungsfrage dieser Arbeit war, ob sich ein gewichtetes Vorhersagemodell von einem Summenscore hinsichtlich seiner prädiktiven Aussagekraft unterscheidet. 
+ 
+# Methodik
+
+Zur Beantwortung dieser Frage wurde ein  gewichtetes Vorhersagemodell auf Basis der PEDIS-Skala entworfen und dieses mit dem PEDIS-Summenscore verglichen.
+Die Daten für diese Studie wurden von Juli 2013 bis Dezember 2016 prospektiv an DFS Patienten in einer Klinik der Region Osnabrück erhoben.
+Die betroffene Extremität wurde hinsichtlich der Merkmale Perfusion, Ausmaß, Tiefe, Infektion, und Sensibilität gemäß der PEDIS-Skala [@schaper_prevention_2016] beurteilt.
+Ebenfalls wurden CRP-Wert, Lokalisation, Dialysepflicht, Alter und Geschlecht dokumentiert.
+Nach einer Follow-Up Phase von sechs Monaten wurde erhoben, ob eine Major-Amputation erfolgte.
+Dieses Outcome diente als Kriterium in einem binären logistischen Regressionsmodell, welches mit R berechnetet wurde [@r_core_team_r:_2016].
+Als Prädiktoren wurden die erhobenen Patientenmerkmale eingeschlossen.
+Um die Nachteile einer schrittweisen Regression zu vermeiden, erfolgte eine Optimierung der Gewichte bzw. die Selektion der Prädiktoren mittels der LASSO-Methode [@tibshirani_regression_2011].
+Zum Vergleich der Modelle, wurden die Sensitivität, Spezifität und die Area-Under-The-Curve (AUC) genutzt.
+Das gewichtete Modell wurde mittels eines stratifizierten 5-fachen Kreuzvalidierungsverfahren berechnet, um eine höhere externe Validität zu erreichen.
+
+# Ergebnis
+Das Regressionsmodell wurde auf Basis von 131 Patienten (Durchschnittsalter 65,83 Jahre; SD 11,21) entworfen, von denen bei 19 Personen eine Major-Amputation erforderlich war.
+Das finale, gewichtete Vorhersagemodell schloss alle Variablen der PEDIS-Skala, sowie das Alter und den CRP-Wert ein.
+Die AUC besaß einen Wert von 0,93 (95% CI: 0,86-0,99), die Sensitivität und Spezifität betrug 93,9% respektiv 75,0%.
+Im Vergleich dazu erzielte der PEDIS-Summenscore einen AUC-Wert von 0,90 (95% CI: 0,84-0,97) mit einer Sensitivität von 88,0% und einer Spezifität von 66,7%.
+
+# Diskussion
+Das gewichtete Modell ist hinsichtlich der Kennwerte dem Summenscore überlegen, was sich insbesondere über den klinisch wichtigen Spezifitätswert zeigt.
+Auch Pickwell et. al [@pickwell_predictors_2015] erzielte mit 0,85 einen AUC-Wert auf Basis des PEDIS-Skala Summenscores, der niedriger ist als der Wert von 0,93 in dieser Studie. 
+Chuan et al. [@chuan_reliability_2015] dagegen erhielten für den PEDIS Summenscore einen AUC-Wert von 0,95. 
+Diese Summenscores [@chuan_reliability_2015] @pickwell_predictors_2015 sind jedoch nicht kreuzvalidiert und besitzen daher tendenziell eine geringe externe Validität [@krstajic_cross-validation_2014].
+Daher sind sie als weniger stabil und klinisch nutzbar einzuschätzen, wenn sie auf neue Patientendaten treffen.
+Das hier vorgestellte logistische Modell besitzt die Schwäche, dass es bislang auf einer kleinen, monozentrischen Stichprobe basiert.
+Vor diesem Hintergrund werden zukünftig weitere Patientendaten multizentrisch prospektiv erhoben, um das vorliegende gewichtete Modell für die Vorhersage von Amputationen zu optimieren und kreuz zu validierten.
+Aktuell wird die Berechnung des Vorhersagemodells in ein entscheidungsunterstützendes System integriert.
+ 
+# Literatur
+
+
